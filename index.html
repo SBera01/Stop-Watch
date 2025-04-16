@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+
+        body {
+            height: 100vh;
+            width: 100%;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            background-color: #2f2e2e;
+            display: grid;
+            place-items: center;
+        }
+
+        section {
+            height: 55rem;
+            width: 30rem;
+            background-color: #1c1b1b;
+            border-radius: 15px;
+            border: 1px solid rgb(162, 162, 34);
+        }
+
+        .buttons {
+            display: grid;
+            place-items: center;
+            grid-template-columns: 2fr 2fr;
+        }
+
+        button {
+            height: 40px;
+            width: 100px;
+            border-radius: 50px;
+            padding: 10px;
+            background-color: #9d9d9a;
+            border: 2px solid #9d9d9a;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 1.5rem;
+            /* font-weight: 500; */
+            /* letter-spacing: 0.1rem; */
+            margin-bottom: 1rem;
+        }
+
+        button:hover {
+            cursor: pointer;
+            background-color: transparent;
+            box-shadow: inset 0 0 0 0.05rem #f5ee63;
+            color: #f5ee63;
+        }
+
+        #countDown {
+            font-size: 8.5rem;
+            color: rgb(165, 24, 12);
+            display: grid;
+            place-items: center;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        p {
+            font-size: 2rem;
+            display: grid;
+            place-items: center;
+            margin-top: 1rem;
+            color: rgb(164, 147, 38);
+        }
+
+
+    </style>
+</head>
+<body>
+    <section>
+        <p id="countDown">0</p>
+        <div class="buttons">
+            <button class="start_btn">Start</button>
+            <button class="reset_btn">Reset</button>
+            <button class="stop_btn">Stop</button>
+            <button class="time_btn">Get Time</button>
+            <button class="clear_btn">Clear All</button>
+        </div>
+        <div id="resetValue"></div>
+    </section>
+    <script>
+        const countDownElement = document.getElementById("countDown");
+        const resetValueElement = document.getElementById("resetValue");
+        let startCount = 0;
+        let intervalID;
+
+        const startTimer = () => {
+            intervalID = setInterval(() => {
+            countDownElement.innerText = startCount++;
+            }, 1000);
+        }
+
+        const resetTimer = () => {
+            startCount = 0;
+            countDownElement.innerText = startCount;
+            clearInterval(intervalID);
+        }
+
+        const stopTimer = () => {
+            clearInterval(intervalID);
+        }
+
+        const showStopValue = () => {
+            const newPara = document.createElement("p");
+            newPara.innerText = `⌚ The stop time is ${countDownElement.innerText}`;
+            resetValueElement.append(newPara);
+        }
+
+        const clearTimeValue = () => {
+            resetValueElement.innerHTML = "";
+        }
+
+        document.querySelector(".start_btn").addEventListener("click", startTimer);
+
+        document.querySelector(".reset_btn").addEventListener("click", resetTimer);
+
+        document.querySelector(".stop_btn").addEventListener("click", stopTimer);
+        
+        document.querySelector(".time_btn").addEventListener("click", showStopValue);
+
+        document.querySelector(".clear_btn").addEventListener("click", clearTimeValue);
+
+    </script>
+</body>
+</html>
